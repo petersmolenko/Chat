@@ -1,0 +1,673 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,500&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+    background: #09101a;
+}
+
+
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #17212b;
+}
+
+::-webkit-scrollbar {
+    width: .4rem;
+    background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #242f3d;
+}
+
+
+.wrapper {
+    min-height: 100vh;
+    min-width: 100vw;
+    background: #09101a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.users-area {
+    height: 100vh;
+    max-width: 24rem;
+    min-width: 22rem;
+    width: 30vw;
+    box-sizing: border-box;
+    background: #17212b;
+    padding: .825rem 1.5rem 5rem 1rem;
+    display: flex;
+    flex-flow: column;
+    border-right: 1px solid #0e1621;
+}
+
+
+
+.navigation-bar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.navigation-bar__menu {
+    color: #6c7883;
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: .835rem;
+}
+
+.navigation-bar__menu:hover {
+    cursor: pointer;
+}
+
+.navigation-bar__search-field {
+    border: none;
+    border-radius: .25rem;
+    flex-grow: 1;
+    background: #242f3d;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+    padding: .625rem;
+    box-sizing: border-box;
+    font-size: 1.25rem;
+}
+
+.navigation-bar__search-field:focus {
+    outline: none;
+}
+
+.usersBlock {
+    overflow: auto;
+    flex-grow: 1;
+}
+
+.title-users-areaBlock {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-start;
+}
+.title-users-area {
+    background: #242f3d;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #7f91a4;
+}
+
+.title-users-area .fa-users {
+    margin-right: .5rem;
+}
+
+.usersBlock__list {
+    list-style: none;
+}
+
+.usersBlock__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.usersBlock__item-settings {
+    font-size: 1.5rem;
+    color: #7f91a4;
+}
+
+.usersBlock__item-settings:hover {
+    cursor: pointer;
+}
+
+.usersBlock__item_currentUser {
+    margin-bottom: 2rem;
+}
+
+.usersBlock__item-avatarBlock {
+    position: relative;
+    margin-right: 1rem;
+}
+
+.usersBlock__list .usersBlock__item-avatarBlock:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    padding: .4rem;
+    background: #7f91a4;
+    border: .1rem solid #242f3d;
+}
+
+.usersBlock__list .usersBlock__item-avatarBlock_online:after {
+    background: limegreen;
+}
+
+.usersBlock__item-avatar {
+    width: 4.25rem;
+    border-radius: 50%;
+}
+
+
+
+.usersBlock__item_currentUser .usersBlock__item-avatar {
+    border-radius: .5rem;
+}
+
+.usersBlock__item-name-message {
+    flex-grow: 1;
+}
+
+.usersBlock__item-name, .usersBlock__item-message, .messages-area__title, .messages-area__users-count {
+    font-weight: 300;
+    font-size: 1.1rem;
+}
+.usersBlock__item-name, .messages-area__title {
+    color: white;
+    margin-bottom: .25rem;
+}
+
+.usersBlock__item_currentUser .usersBlock__item-name {
+    font-weight: 500;
+}
+
+.usersBlock__item_currentUser .usersBlock__item-message {
+    color: #5288c1;
+}
+
+/*.usersBlock__item-message {
+    max-height: 2rem;
+}*/
+.usersBlock__item-message, .messages-area__users-count {
+    color: #7f91a4;
+    text-overflow: ellipsis;
+}
+
+.messages-area {
+    flex-grow: 1;
+    background: #0e1621;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    min-width: 22rem;
+}
+
+
+.messages-area__header {
+    padding: 1.25rem 1rem;
+    background: #17212b;
+}
+
+.messages-area__main-container {
+    padding: 1rem .5rem;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.messages-area__avatar {
+    border-radius: 50%;
+    max-width: 3rem;
+    align-self: flex-start;
+    flex-shrink: 0;
+    margin-right: 1rem;
+}
+
+.messages-area__user-messages_current-user .messages-area__avatar, .messages-area__user-messages_current-user .load-form__user-avaBlock {
+    order: 1;
+    margin: 0;
+}
+
+
+.messages-area__main {
+    display: flex;
+    flex-grow: 1;
+    min-height: 100%;
+    flex-flow: column;
+    justify-content: flex-end;
+}
+
+.messages-area__user-messages {
+    display: flex;
+    margin-bottom: .25rem;
+}
+
+.messages-area__messagesBlock {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.messages-area__user-messages_current-user .messages-area__messagesBlock {
+    margin-right: 1rem;
+    align-items: flex-end;
+}
+/*, .messages-area__user-messages_current-user .load-form__user-avaBlock*/
+.messages-area__user-messages_current-user .messages-area__messagesBlock .messages-area__message {
+    background: #2b5278;
+}
+
+.messages-area__message {
+    padding: .825rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #182533;
+    color: white;
+    font-weight: 300;
+    border-radius: .25rem;
+    margin-bottom: .25rem;
+    position: relative;
+}
+
+.messages-area__message:first-child:before {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    border: .625rem solid #182533;
+    bottom: 0;
+    left: -.625rem;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+
+}
+
+.messages-area__user-messages_current-user .messages-area__messagesBlock .messages-area__message:first-child:before {
+    border: .625rem solid #2b5278;
+    left: 100%;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    transform: translate(-50%);
+}
+
+.messages-area__message:last-child {
+    margin-bottom: 0;
+}
+
+.messages-area__message-content {
+    margin-right: 1rem;
+}
+
+.messages-area__message-time {
+    color: #7a8b9e;
+    align-self: flex-end;
+}
+
+.messages-area__footer {
+    padding: 1rem;
+    background: #17212b;
+    display: flex;
+}
+
+.messages-area__message-textBlock {
+    flex-grow: 1;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.messages-area__message-field {
+    resize: none;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 1rem .5rem;
+    background: inherit;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    border: none;
+    flex-grow: 1;
+}
+
+.messages-area__message-field:focus {
+    outline: none;
+}
+
+.messages-area__send-messageBlock {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.messages-area__send-messageBtn {
+    padding: .875rem 1.5rem;
+    color: white;
+    background: #5288c1;
+    border: none;
+    border-radius: .25rem;
+    font-size: 1rem;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.messages-area__send-messageBtn:hover {
+    cursor: pointer;
+}
+
+.messages-area__send-messageBtn:active, .messages-area__send-messageBtn:focus {
+    outline: none;
+}
+
+.auth-window {
+    background: #17212b;
+    position: relative;
+    box-sizing: border-box;
+    padding: 2.25rem 6.875rem;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    font-family: 'Ubuntu', sans-serif;
+    max-width: 32.25rem;
+}
+
+.auth-window:before {
+    content: '\2573';
+    color: white;
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+}
+.auth-window:hover:before {
+    cursor: pointer;
+}
+
+.auth-window__logo-block {
+    position: relative;
+    padding: 4.5rem;
+    margin-bottom: 2rem;
+    background: #242f3d;
+    border-radius: 50%;
+    align-self: center;
+}
+.auth-window__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.auth-window__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.auth-window__action-message {
+    color: #7f91a4;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-window__input-block {
+    margin-bottom: .5rem;
+}
+.auth-window__error-block {
+    color: tomato;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-window__text-field {
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    background: inherit;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-bottom: 1px solid #465362;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+
+.auth-window__text-field:last-child {
+    margin-bottom: 0;
+}
+
+.auth-window__text-field:focus {
+    outline: none;
+    border-bottom: 1px solid #5288c1;
+}
+
+.auth-window__login-btn {
+    padding: .75rem 2.5rem;
+    background: #5288c1;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: none;
+    align-self: center;
+    border-radius: .3rem;
+    font-family: 'Ubuntu', sans-serif;
+    transition: all .2s linear;
+}
+.auth-window__login-btn_reg {
+    background: #1d2a39;
+    color: #5288c1;
+}
+
+.auth-window__login-btn_cancel {
+    margin-right: .5rem;
+    background: inherit;
+    color: #5288c1;
+}
+
+.auth-window__login-btn:hover {
+    cursor: pointer;
+}
+
+.auth-window__login-btn:active, .auth-window__login-btn:focus {
+    outline: none;
+}
+
+
+
+
+.control_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=file]{
+    outline:0;
+    opacity:0;
+    pointer-events:none;
+    user-select:none}
+
+.load-form__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.load-form {
+    padding: 2rem;
+    background: #17212b;
+    min-width: 20rem;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+}
+
+.load-form__closeBtn {
+    position: absolute;
+    color: #737e87;
+    top: 1rem;
+    right: 1rem;
+}
+
+.load-form__closeBtn:hover {
+    cursor: pointer;
+}
+
+.load-form__title, .load-form__user-name {
+    font-size: 1.125rem;
+    color: white;
+    font-weight: 500;
+}
+.load-form__title {
+    margin-bottom: 2rem;
+}
+
+.load-form__load-area {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.load-form__load-area:hover {
+    cursor: pointer;
+}
+
+
+.load-form__user-avaBlock {
+    color: white;
+    padding: 1.5rem;
+    position: relative;
+    margin-right: 1rem;
+    background: #242f3d;
+    align-self: flex-start;
+    border-radius: 50%;
+}
+
+.load-form__user-avaBlock_big {
+    padding: 2.125rem;
+    margin: 0;
+}
+
+.load-form__user-avaBlock_big .load-form__user-avaImage {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.load-form__user-avaBlock_big .load-form__user-avaName {
+    display: none;
+}
+
+.load-form__user-ava {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+.load-form__user-avaImage {
+    font-size: 1rem;
+    margin-bottom: .2rem;
+}
+.load-form__user-avaName {
+    font-size: .5rem;
+    display: block;
+    max-width: 2.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.load-form__about-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.load-form__user-name {
+    margin-bottom: .5rem;
+}
+
+.load-form__user-status {
+    font-size: .825rem;
+    color: #51b3f3;
+    font-weight: 300;
+}
+
+
+#load__photo, .load__label {
+    width: 0px;
+    height: 0px;
+}
+
+.photo-editor__edit-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+    width:20rem;
+    background: #242f3d;
+    margin-bottom: .8rem;
+}
+
+/*.photo-editor__edit-canvas {
+    width: 100%;
+    height: 100%;
+}*/
+
+.photo-editor__photo {
+    max-height: 20rem;
+}
+
+.photo-editor__edit-message {
+    font-weight: 300;
+    color: #7f91a4;
+    font-size: .825rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.photo-editor__edit-controls {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.photo-editor__btn {
+    padding: .5rem 1rem;
+    outline: none;
+    background: #1d2a39;
+    color: #6ab2f2;
+    font-size: 1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    border: none;
+    border-radius: .25rem;
+    margin-right: .25rem;
+}
+
+.photo-editor__btn:hover {
+    cursor: pointer;
+}
+
+
+.photo-editor__btn:last-child {
+    margin: 0;
+}
+
+.photo-editor__btn_backNull {
+    background: inherit;
+}
+
+
+/*Avatar editor*/
+
+

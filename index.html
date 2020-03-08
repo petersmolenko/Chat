@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        
+    </div>
+    <script src="https://kit.fontawesome.com/b11fe38f14.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="x-handlebars-template" id="authFormTemplate">
+        <div class="auth-window">
+            <div class="auth-window__logo-block">
+                <img src="images/logo.png" alt="logo" class="auth-window__logo">
+            </div>
+            <div class="auth-window__title">Авторизация</div>
+            <div class="auth-window__action-message">Введите, пожалуйста, своё фио и ник для дальнейшей авторизации</div>
+            <div class="auth-window__input-block">
+                <input id="userNameField" type="text" placeholder="Введите свое имя" class="auth-window__text-field">
+                <input id="userNickField" type="text" placeholder="Введите свой ник" class="auth-window__text-field">
+            </div>
+            <div id = "error_block" class="auth-window__error-block"></div>
+            <button id="auth_btn" class="auth-window__login-btn">Войти</button>
+        </div>
+    </script>
+    <script type="x-handlebars-template" id="regFormTemplate">
+        <div class="auth-window">
+            <div class="auth-window__logo-block">
+                <img src="images/logo.png" alt="logo" class="auth-window__logo">
+            </div>
+            <div class="auth-window__title">Регистрация</div>
+            <div class="auth-window__action-message">Нет такого пользователя, введите пароль для регистрации</div>
+            <div class="auth-window__input-block">
+                <input id="passwordField" type="text" placeholder="Пароль чата" class="auth-window__text-field">
+            </div>
+            <div id = "error_block" class="auth-window__error-block"></div>
+            <div class="control_block">
+                <button id="auth_btn" class="auth-window__login-btn auth-window__login-btn_cancel">Отмена</button>
+                <button id="reg_btn" class="auth-window__login-btn auth-window__login-btn_reg">Зарегистрироваться</button>
+            </div>
+        </div>
+    </script>
+<!-- <img src="images/ava1.png" alt="" class="usersBlock__item-avatar"> -->
+    <script type="x-handlebars-template" id="mainTemplate">
+        <div class="users-area">
+            <div class="usersBlock__item usersBlock__item_currentUser">
+                <div class="usersBlock__item-avatarBlock">
+                            <img src="images/ava.png" alt="" class="usersBlock__item-avatar">
+                        </div>
+                <div class="usersBlock__item-name-message">
+                    <div class="usersBlock__item-name">{{ currentUser.name }}</div>
+                    <div class="usersBlock__item-message">Online</div>
+                </div>
+                <div class="usersBlock__item-settings" id="settingsBtn">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <div class="title-users-areaBlock">
+                <div class="title-users-area">
+                       <i class="fa fa-users" aria-hidden="true"></i>Участники (<span id="users_online_here">{{users.count}}</span>)
+                </div>  
+            </div>
+            <div class="usersBlock">
+                <ul class="usersBlock__list" id="users_list">
+                    {{#each users.items}}
+                    <li class="usersBlock__item" data-user="{{ this.nick }}">
+                        <div class="usersBlock__item-avatarBlock {{#if this.is_online }}usersBlock__item-avatarBlock_online{{/if}}">
+                            <div class="load-form__user-avaBlock load-form__user-avaBlock_big">
+                                <div class="load-form__user-ava">
+                                    <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
+                                    <span class="load-form__user-avaName">Peter</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="usersBlock__item-name-message">
+                            <div class="usersBlock__item-name">{{ this.name }}</div>
+                            <div class="usersBlock__item-message">Сообщений нет</div>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="messages-area">
+            <div class="messages-area__header">
+                <div class="messages-area__title">Чат</div>
+                <div class="messages-area__users-count">В сети: <span id="users_online">{{users.onlineCount}}</span></div>
+            </div>
+            <div class="messages-area__main-container">
+                <div class="messages-area__main" id="messagesArea">
+                </div>
+            </div>
+            <div class="messages-area__footer">
+                <div class="messages-area__message-textBlock">
+                    <textarea name=""  id="sendField" rows="1" class="messages-area__message-field" placeholder="Введите сообщение..."></textarea>
+                </div>
+                <div class="messages-area__send-messageBlock">
+                    <button class="messages-area__send-messageBtn" id="sendBtn">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- <img src="images/ava1.png" alt="" class="messages-area__avatar"> -->
+    <script type="x-handlebars-template" id="messageBlockTemplate">
+        <div class="messages-area__user-messages">
+            <div class="load-form__user-avaBlock">
+                <div class="load-form__user-ava">
+                    <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
+                    <span class="load-form__user-avaName">Peter</span>
+                </div>
+            </div>
+            
+            <div class="messages-area__messagesBlock">
+                <div class="messages-area__message">
+                    <span class="messages-area__message-content">{{ message.body }}</span>
+                    <span class="messages-area__message-time">{{ message.time }}</span>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="x-handlebars-template" id="messageTemplate">
+        <div class="messages-area__message">
+            <span class="messages-area__message-content">{{ message.body }}</span>
+            <span class="messages-area__message-time">{{ message.time }}</span>
+        </div>
+    </script>
+    <script type="x-handlebars-template" id="userAsideTemplate">
+        <li class="usersBlock__item" data-user="{{ this.nick }}">
+            <div class="usersBlock__item-avatarBlock {{#if this.is_online }}usersBlock__item-avatarBlock_online{{/if}}">
+                <img src="images/ava1.png" alt="" class="usersBlock__item-avatar">
+            </div>
+            <div class="usersBlock__item-name-message">
+                <div class="usersBlock__item-name">{{ this.name }}</div>
+                <div class="usersBlock__item-message">Рад был пообщаться.</div>
+            </div>
+        </li>
+    </script>
+    <!-- <img src="images/ava.png" alt="" class="photo-editor__photo"> -->
+    <script type="x-handlebars-template" id="photoEditor">
+        <div class="load-form">
+            <div class="load-form__title">Загрузка фото</div>
+
+            <div class="photo-editor">
+                <div class="photo-editor__edit-content" id="photoEditorArea">
+                    <canvas class="photo-editor__edit-canvas" id="avaEditorCanvas" width="320" height="320"></canvas>
+                </div>
+                <div class="photo-editor__edit-message">Область для профильной фотографии</div>
+                <div class="photo-editor__edit-controls">
+                    <button class="photo-editor__btn photo-editor__btn_backNull" id="photoEditorCancelBtn">Отмена</button> 
+                    <button class="photo-editor__btn" id="photoEditorSaveBtn">Сохранить</button>
+                </div>
+            </div>
+            <div class="load-form__closeBtn" id="photoEditorCloseBtn">&#9587;</div>
+        </div>
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
