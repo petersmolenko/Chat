@@ -175,6 +175,11 @@ io.sockets.on('connection', socket=>{
             messages.addItem(new Message(message));
             message.time = messages.findItem(message.time).getTime()
             io.sockets.emit('newMessage', message)
+        });
+
+        socket.on('setImg', img=>{
+            users.findItem(img.user).set('ava', img.img);
+            io.sockets.emit('avaUpdate', img)
         })
     })
 })

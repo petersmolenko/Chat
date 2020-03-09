@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Auth</title>
+    <title>Chat</title>
+    <link rel="icon" href="images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -49,9 +50,19 @@
     <script type="x-handlebars-template" id="mainTemplate">
         <div class="users-area">
             <div class="usersBlock__item usersBlock__item_currentUser">
-                <div class="usersBlock__item-avatarBlock">
-                            <img src="images/ava.png" alt="" class="usersBlock__item-avatar">
+                <div class="usersBlock__item-avatarBlock" id="profileBlock">
+                        {{#if currentUser.ava}}
+                            <img src="{{currentUser.ava}}" alt="" class="usersBlock__item-avatar">
+                        {{else}}
+                            <div class="load-form__user-avaBlock load-form__user-avaBlock_big">
+                                <div class="load-form__user-ava">
+                                    <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
+                                    <span class="load-form__user-avaName">Peter</span>
+                                </div>
+                            </div>
+                            {{/if}}
                         </div>
+                        
                 <div class="usersBlock__item-name-message">
                     <div class="usersBlock__item-name">{{ currentUser.name }}</div>
                     <div class="usersBlock__item-message">Online</div>
@@ -71,13 +82,16 @@
                     {{#each users.items}}
                     <li class="usersBlock__item" data-user="{{ this.nick }}">
                         <div class="usersBlock__item-avatarBlock {{#if this.is_online }}usersBlock__item-avatarBlock_online{{/if}}">
+                          {{#if this.ava }}
+                               <img src="{{this.ava}}" alt="" class="usersBlock__item-avatar"> 
+                          {{else}}
                             <div class="load-form__user-avaBlock load-form__user-avaBlock_big">
                                 <div class="load-form__user-ava">
                                     <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
                                     <span class="load-form__user-avaName">Peter</span>
                                 </div>
                             </div>
-
+                            {{/if}}
                         </div>
                         <div class="usersBlock__item-name-message">
                             <div class="usersBlock__item-name">{{ this.name }}</div>
@@ -109,14 +123,17 @@
     </script>
     <!-- <img src="images/ava1.png" alt="" class="messages-area__avatar"> -->
     <script type="x-handlebars-template" id="messageBlockTemplate">
-        <div class="messages-area__user-messages">
+        <div class="messages-area__user-messages" data-user="{{message.author}}">
+            {{#if message.ava }}
+                <img src="{{message.ava}}" alt="" class="messages-area__avatar"> 
+            {{else}}
             <div class="load-form__user-avaBlock">
-                <div class="load-form__user-ava">
-                    <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
-                    <span class="load-form__user-avaName">Peter</span>
-                </div>
+                    <div class="load-form__user-ava">
+                        <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
+                        <span class="load-form__user-avaName">{{message.author}}</span>
+                    </div> 
             </div>
-            
+            {{/if}}
             <div class="messages-area__messagesBlock">
                 <div class="messages-area__message">
                     <span class="messages-area__message-content">{{ message.body }}</span>
@@ -134,22 +151,34 @@
     <script type="x-handlebars-template" id="userAsideTemplate">
         <li class="usersBlock__item" data-user="{{ this.nick }}">
             <div class="usersBlock__item-avatarBlock {{#if this.is_online }}usersBlock__item-avatarBlock_online{{/if}}">
-                <img src="images/ava1.png" alt="" class="usersBlock__item-avatar">
+                <div class="load-form__user-avaBlock load-form__user-avaBlock_big">
+                                <div class="load-form__user-ava">
+                                    <i class="fa fa-camera load-form__user-avaImage" aria-hidden="true"></i>
+                                    <span class="load-form__user-avaName">Peter</span>
+                                </div>
+                            </div>
             </div>
             <div class="usersBlock__item-name-message">
                 <div class="usersBlock__item-name">{{ this.name }}</div>
-                <div class="usersBlock__item-message">Рад был пообщаться.</div>
+                <div class="usersBlock__item-message">Сообщений нет.</div>
             </div>
         </li>
     </script>
     <!-- <img src="images/ava.png" alt="" class="photo-editor__photo"> -->
+    <!-- <canvas class="photo-editor__edit-canvas" id="avaEditorCanvas" width="320" height="320"></canvas> -->
     <script type="x-handlebars-template" id="photoEditor">
         <div class="load-form">
             <div class="load-form__title">Загрузка фото</div>
 
             <div class="photo-editor">
                 <div class="photo-editor__edit-content" id="photoEditorArea">
-                    <canvas class="photo-editor__edit-canvas" id="avaEditorCanvas" width="320" height="320"></canvas>
+                    <div class="photo-editor__edit-getPhoto" id="getPhotoRegionBlock">
+                        <div class="photo-editor__edit-getPhotoRegion">
+                            <i class="fa fa-camera photo-editor__edit-Logo" aria-hidden="true"></i>
+                            <div class="photo-editor__edit-Message">Перетащите фото в указанную область</div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="photo-editor__edit-message">Область для профильной фотографии</div>
                 <div class="photo-editor__edit-controls">
